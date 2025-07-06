@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ᯓ©Bandrak_Shop_Official ✰</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #0f0f1a;
+            color: #fff;
+            overflow-x: hidden;
+            transition: all 0.5s ease;
+        }
+
+        /* Loading Animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease;
+        }
+
+        .anime-theme {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .loading-bar {
+            width: 80%;
+            max-width: 300px;
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 30px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff6b6b, #ffa3a3);
+            border-radius: 5px;
+            transition: width 5s linear;
+        }
+
+        /* Main Content */
+        .container {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .shop-name {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ff6b6b;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .reminder {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .payment-method {
+            background: linear-gradient(145deg, #1e1e2e, #2a2a3a);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #333;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-color: #ff6b6b;
+        }
+
+        .payment-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .payment-method:hover .payment-logo {
+            transform: scale(1.1);
+        }
+
+        .payment-name {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #ffa3a3;
+        }
+
+        .payment-details {
+            display: none;
+            margin-top: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .account-number {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .account-name {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .qris-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .qris-image {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            border: 1px solid #444;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background-color: white;
+            padding: 10px;
+        }
+
+        .contact-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(90deg, #ff8e8e, #ff6b6b);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <img src="https://e.top4top.io/p_34741btd01.jpg" alt="Anime Theme" class="anime-theme">
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="header">
+            <img src="https://b.top4top.io/p_34741xfe11.jpg" alt="Bandrak Shop Logo" class="logo floating">
+            <h1 class="shop-name">ᯓ©𝐁𝐚𝐧𝐝𝐫𝐚𝐤_𝐒𝐡𝐨𝐩_𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥 ✰</h1>
+            <p class="reminder">JANGAN LUPA BUKTI TRANSFER NYA UNTUK KOMPIMASRI</p>
+        </div>
+
+        <div class="payment-options">
+            <!-- DANA -->
+            <div class="payment-method" onclick="showPaymentDetails('dana')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_DANA.svg" alt="DANA" class="payment-logo">
+                <h3 class="payment-name">DANA</h3>
+                <div class="payment-details" id="dana-details">
+                    <p class="account-number">085773652775</p>
+                    <p class="account-name">Atas nama: indra Gunawan</p>
+                </div>
+            </div>
+
+            <!-- OVO -->
+            <div class="payment-method" onclick="showPaymentDetails('ovo')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg" alt="OVO" class="payment-logo">
+                <h3 class="payment-name">OVO</h3>
+                <div class="payment-details" id="ovo-details">
+                    <p class="account-number">0895406196907</p>
+                    <p class="account-name">Atas nama: indra Gunawan</p>
+                </div>
+            </div>
+
+            <!-- GOPAY -->
+            <div class="payment-method" onclick="showPaymentDetails('gopay')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" alt="GOPAY" class="payment-logo">
+                <h3 class="payment-name">GOPAY</h3>
+                <div class="payment-details" id="gopay-details">
+                    <p class="account-number">085133499437</p>
+                    <p class="account-name">Atas nama: indra Gunawan</p>
+                </div>
+            </div>
+
+            <!-- QRIS -->
+            <div class="payment-method" onclick="showPaymentDetails('qris')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QRIS_logo.svg/1200px-QRIS_logo.svg.png" alt="QRIS" class="payment-logo">
+                <h3 class="payment-name">QRIS</h3>
+                <div class="payment-details" id="qris-details">
+                    <div class="qris-container">
+                        <img src="https://j.top4top.io/p_34713xwlx1.jpg" alt="QR Code" class="qris-image">
+                        <p class="account-name">Scan QR Code di atas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="https://wa.me/+62895406196907" class="contact-button">CONTACT BANDRAK SHOP</a>
+        </div>
+    </div>
+
+    <script>
+        // Loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingProgress = document.querySelector('.loading-progress');
+            const loadingScreen = document.querySelector('.loading-screen');
+            const container = document.querySelector('.container');
+            
+            // Start loading animation
+            loadingProgress.style.width = '100%';
+            
+            // After 5 seconds, hide loading screen and show content
+            setTimeout(function() {
+                loadingScreen.style.opacity = '0';
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                    container.style.display = 'block';
+                    setTimeout(function() {
+                        container.style.opacity = '1';
+                    }, 50);
+                }, 1000);
+            }, 5000);
+        });
+
+        // Show payment details when clicked
+        function showPaymentDetails(method) {
+            // Hide all payment details first
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+            
+            // Show the selected payment details
+            const details = document.getElementById(`${method}-details`);
+            details.style.display = 'block';
+            
+            // If QRIS, show the QRIS container
+            if (method === 'qris') {
+                details.querySelector('.qris-container').style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
